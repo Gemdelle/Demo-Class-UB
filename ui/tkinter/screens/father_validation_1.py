@@ -56,7 +56,7 @@ class FatherValidation1:
         self.canvas.create_window(210, 875, anchor='nw', window=self.output_text)
 
         # Initial GIF
-        self.father_gif_root = resource_path("assets\\gifs\\father\\father_default_grey.gif")
+        self.father_gif_root = resource_path("assets\\gifs\\base.gif")
         self.animated_gif = AnimatedGIF(self.canvas, self.father_gif_root, 740, 180)
         self.animated_gif.start_animation()
 
