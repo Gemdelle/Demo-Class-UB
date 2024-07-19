@@ -70,6 +70,7 @@ def start_father_screen():
 
     FatherScreen(root, close_app)
     root.protocol("WM_DELETE_WINDOW", lambda: on_close(root))
+    root.overrideredirect(True)
     root.bind("<FocusIn>", on_focus_in)
     root.bind("<FocusOut>", on_focus_out)
     # root.after(100, lambda: remove_title_bar(root))
