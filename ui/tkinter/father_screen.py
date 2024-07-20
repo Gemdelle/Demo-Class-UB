@@ -1,4 +1,6 @@
-from ui.tkinter.screens.father_game import FatherGame
+from ui.tkinter.screens.father_game_1 import FatherGame1
+from ui.tkinter.screens.father_game_2 import FatherGame2
+from ui.tkinter.screens.father_game_3 import FatherGame3
 from ui.tkinter.screens.father_validation_1 import FatherValidation1
 from ui.tkinter.screens.father_validation_2 import FatherValidation2
 from ui.tkinter.screens.father_validation_3 import FatherValidation3
@@ -9,10 +11,7 @@ class FatherScreen:
         self.root = root
         self.root.title("Father Screen")
         self.close_app = close_app
-        self.validation_canvas = FatherValidation1(
-            self.root,
-            self.go_to_validation_2
-        )
+        self.go_to_father_game_1()
 
     def go_to_validation_2(self):
         self.validation_canvas = FatherValidation2(
@@ -24,8 +23,20 @@ class FatherScreen:
             self.root,
             self.go_to_father_game
         )
-    def go_to_father_game(self):
-        self.validation_canvas = FatherGame(
+    def go_to_father_game_1(self):
+        self.validation_canvas = FatherGame1(
+            self.root,
+            self.go_to_father_game_2
+        )
+
+    def go_to_father_game_2(self):
+        self.validation_canvas = FatherGame2(
+            self.root,
+            self.go_to_father_game_3
+        )
+
+    def go_to_father_game_3(self):
+        self.validation_canvas = FatherGame3(
             self.root,
             self.close_app
         )

@@ -8,17 +8,17 @@ from utils.constants import Constants
 from utils.resource_path_util import resource_path
 from utils.set_time_out_manager import SetTimeoutManager
 
-class FatherGame:
+class FatherGame3:
     def __init__(self, root, go_next):
         self.objects = {}
         self.move_commands = {
-                    "MoveEast": lambda: self.move_right(self.objects['father']),
-                    "MoveWest": lambda: self.move_left(self.objects['father']),
-                    "MoveNorth": lambda: self.move_up(self.objects['father']),
-                    "MoveSouth": lambda: self.move_down(self.objects['father'])
-                }
-        self.map_limit_x = 4
-        self.map_limit_y = 4
+            "MoveEast": lambda: self.move_right(self.objects['father']),
+            "MoveWest": lambda: self.move_left(self.objects['father']),
+            "MoveNorth": lambda: self.move_up(self.objects['father']),
+            "MoveSouth": lambda: self.move_down(self.objects['father'])
+        }
+        self.map_limit_x = 6
+        self.map_limit_y = 6
         self.has_lost = False
         self.has_win = False
         self.setTimeoutManager = SetTimeoutManager()
@@ -67,19 +67,20 @@ class FatherGame:
         self.canvas.create_window(210, 875, anchor='nw', window=self.output_text)
 
         # TileMap related
-        self.tile_size = 170
-        self.grid_size = 5
-        tile_map_offset = 150
+        self.tile_size = 140
+        self.grid_size = 7
+        tile_map_offset_x = 50
+        tile_map_offset_y = 30
         self.tile_map = tk.Canvas(self.canvas, width=self.tile_size * self.grid_size, height=self.tile_size * self.grid_size, borderwidth=0, highlightthickness=0)
         self.create_objects()
-        self.canvas.create_window(screen_width - (self.tile_size * self.grid_size) - tile_map_offset, screen_height - (self.tile_size * self.grid_size) - tile_map_offset, anchor='nw', window=self.tile_map)
+        self.canvas.create_window(screen_width - (self.tile_size * self.grid_size) - tile_map_offset_x, screen_height - (self.tile_size * self.grid_size) - tile_map_offset_y, anchor='nw', window=self.tile_map)
         mini_game_map_image = Image.open(resource_path("assets\\images\\mini-game-map.png"))
         mini_game_map_image = mini_game_map_image.resize((850, 850))
         mini_game_map_image_tk = ImageTk.PhotoImage(mini_game_map_image)
         setattr(self.tile_map, "mini_game_map_image_tk", mini_game_map_image_tk)
         self.tile_map.create_image(0, 0, anchor='nw', image=mini_game_map_image_tk, tags="mini_game_map")
 
-        #self.draw_grid()
+        self.draw_grid()
 
         self.objects['father'] = self.tile_map.create_oval(
             self.get_centered_coords(0, 4, offset=self.tile_size // 4), fill='white')

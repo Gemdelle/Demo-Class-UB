@@ -25,7 +25,7 @@ screen_height = info.current_h
 
 # Set up the window to occupy the maximum resolution without full screen
 screen = pygame.display.set_mode((screen_width, screen_height))
-screen_selected = Screens.SPLASH
+screen_selected = Screens.FATHER
 pygame.display.set_caption("BioScripts")
 clock = pygame.time.Clock()
 
@@ -83,7 +83,6 @@ def start_father_screen():
 def on_close(root):
     global father_screen_ongoing
     resume_pygame()
-    go_to_game_screen_meet_housekeeper()
     root.destroy()
     father_screen_ongoing = False
 
@@ -104,11 +103,6 @@ font_path = os.path.join("assets", "fonts", "BavarianCrown.ttf")
 font = pygame.font.Font(font_path, 32)
 text_area_visible = False
 text_input = ""
-
-def go_to_game_screen_meet_housekeeper():
-    global screen_selected
-    print("CURRENT_SCREEN: GAME_SCREEN_MEET_HOUSEKEEPER")
-    screen_selected = Screens.GAME_SCREEN_MEET_HOUSEKEEPER
 
 def go_to_father_screen():
     global screen_selected
