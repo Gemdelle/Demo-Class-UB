@@ -18,8 +18,8 @@ class FatherGame1:
             "MoveNorth": lambda: self.move_up(self.objects['father']),
             "MoveSouth": lambda: self.move_down(self.objects['father'])
         }
-        self.map_limit_x = 4
-        self.map_limit_y = 4
+        self.map_limit_x = 5
+        self.map_limit_y = 5
         self.has_lost = False
         self.has_win = False
         self.setTimeoutManager = SetTimeoutManager()
@@ -28,7 +28,7 @@ class FatherGame1:
         self.steps = 7
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
-        chosen_map = random.randint(1, 20) % 2
+        self.chosen_map = random.randint(1, 20) % 2
 
         self.canvas = tk.Canvas(self.root)
         self.canvas.pack(fill=tk.BOTH, expand=tk.YES)
@@ -83,7 +83,7 @@ class FatherGame1:
         mini_game_map_image_tk = ImageTk.PhotoImage(mini_game_map_image)
         setattr(self.tile_map, "mini_game_map_image_tk", mini_game_map_image_tk)
         self.tile_map.create_image(0, 0, anchor='nw', image=mini_game_map_image_tk, tags="mini_game_map")
-        if chosen_map == 0:
+        if self.chosen_map == 0:
             self.create_objects()
         else:
             self.create_objects_2()
@@ -283,6 +283,7 @@ class FatherGame1:
             self.output_text.delete("1.0", tk.END)
             self.output_text.insert(tk.END, "Timeout occurred during compilation or execution.\n")
     def close_game(self):
+        self.canvas.destroy()
         self.go_next()
 
     def check_reset_positions(self):
@@ -300,21 +301,39 @@ class FatherGame1:
             self.tile_map.coords(obj_id, *self.get_initial_position(obj_id))
 
     def get_initial_position(self, obj_id):
+        if self.chosen_map == 0:
+            if obj_id == self.objects['crystal1']:
+                return self.get_centered_coords(3, 0, offset=self.tile_size // 4)
+            elif obj_id == self.objects['crystal2']:
+                return self.get_centered_coords(1, 1, offset=self.tile_size // 4)
+            elif obj_id == self.objects['crystal3']:
+                return self.get_centered_coords(1, 2, offset=self.tile_size // 4)
+            elif obj_id == self.objects['crystal4']:
+                return self.get_centered_coords(3, 2, offset=self.tile_size // 4)
+            elif obj_id == self.objects['food']:
+                return self.get_centered_coords(1, 0, offset=self.tile_size // 4)
+            elif obj_id == self.objects['father']:
+                return self.get_centered_coords(4, 4, offset=self.tile_size // 4)
+            else:
+                return (0, 0, 0, 0)
+        else:
+            return self.get_initial_position_2(obj_id)
+
+    def get_initial_position_2(self, obj_id):
         if obj_id == self.objects['crystal1']:
-            return self.get_centered_coords(1, 1, offset=self.tile_size // 4)
+            return self.get_centered_coords(4, 0, offset=self.tile_size // 4)
         elif obj_id == self.objects['crystal2']:
-            return self.get_centered_coords(2, 3, offset=self.tile_size // 4)
+            return self.get_centered_coords(2, 1, offset=self.tile_size // 4)
         elif obj_id == self.objects['crystal3']:
-            return self.get_centered_coords(3, 1, offset=self.tile_size // 4)
+            return self.get_centered_coords(4, 2, offset=self.tile_size // 4)
         elif obj_id == self.objects['crystal4']:
-            return self.get_centered_coords(1, 4, offset=self.tile_size // 4)
+            return self.get_centered_coords(1, 3, offset=self.tile_size // 4)
         elif obj_id == self.objects['food']:
-            return self.get_centered_coords(3, 0, offset=self.tile_size // 4)
+            return self.get_centered_coords(4, 1, offset=self.tile_size // 4)
         elif obj_id == self.objects['father']:
             return self.get_centered_coords(0, 4, offset=self.tile_size // 4)
         else:
             return (0, 0, 0, 0)
-
 
     def split_java_classes(self, java_code):
         java_classes = []
